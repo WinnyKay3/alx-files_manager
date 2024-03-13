@@ -14,7 +14,6 @@ class RedisClient {
       this.isConnected = true;
     });
 
-    // No changes to the promisification of methods
     this.asyncSetX = promisify(this.client.setex).bind(this.client);
     this.asyncGet = promisify(this.client.get).bind(this.client);
     this.asyncDel = promisify(this.client.del).bind(this.client);
@@ -24,7 +23,6 @@ class RedisClient {
     return this.isConnected;
   }
 
-  // Now properly awaits the promise and allows for error handling or confirmation of operation completion
   async set(key, value, expiry) {
     try {
       await this.asyncSetX(key, expiry, value);
@@ -34,12 +32,10 @@ class RedisClient {
     }
   }
 
-  // No significant changes needed; just ensures that any potential consumer knows it returns a promise
   async get(key) {
     return this.asyncGet(key);
   }
 
-  // Ensures the method signature clearly indicates it returns a promise for deletion operation
   async del(key) {
     return this.asyncDel(key);
   }
