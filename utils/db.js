@@ -1,6 +1,5 @@
 const { MongoClient } = require('mongodb');
 
-
 class DBClient {
   constructor() {
     const host = process.env.DB_HOST || 'localhost';
@@ -18,9 +17,9 @@ class DBClient {
     this.client.connect()
       .then(() => {
         this.db = this.client.db(this.dbName);
-        console.log("Successfully connected to MongoDB.");
+        console.log('Successfully connected to MongoDB.');
       })
-      .catch((err) => console.error("Connection to MongoDB failed", err));
+      .catch((err) => console.error('Connection to MongoDB failed', err));
   }
 
   // Check if the MongoDB connection is alive
@@ -32,13 +31,13 @@ class DBClient {
   async nbUsers() {
     if (!this.isAlive()) return 0;
     const collection = this.db.collection('users');
-    return await collection.countDocuments();
+    return collection.countDocuments();
   }
 
   async nbFiles() {
     if (!this.isAlive()) return 0;
     const collection = this.db.collection('files');
-    return await collection.countDocuments();
+    return collection.countDocuments();
   }
 }
 
